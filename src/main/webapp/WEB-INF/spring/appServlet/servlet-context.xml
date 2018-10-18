@@ -3,9 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -23,6 +25,22 @@
 	
 	<context:component-scan base-package="com.company.hellospring" />
 	
-	
+		<beans:bean id="log" class="com.company.hellospring.LogAdvice"/>
+		<beans:bean id="log4j" class="com.company.hellospring.Log4jAdvice"/>
+		<aop:config>
+			<aop:pointcut expression="execution(* com.company..*Impl.*(..))" 
+						  id="allpointcut"/>	<!-- com.company 하위패키지 포함 impl로 끝나는 모든 class의 모든 메소드  -->
+						  
+			<aop:pointcut expression="execution(* com.company..*Impl.get*(..))" 
+						  id="getpointcut"/>	<!-- com.company 하위패키지 포함 impl로 끝나는 모든 class의 get 메소드  -->
+						  
+			<aop:aspect ref="log">
+				<aop:before method="printLog" pointcut-ref="allpointcut"/>	<!-- allpointcut 실행전 수행할 메소드 선택 -->
+			</aop:aspect>
+			
+			<aop:aspect ref="log4j">
+				<aop:before method="printLogging" pointcut-ref="getpointcut"/>	<!-- getpointcut 실행전 수행할 메소드 선택 -->
+			</aop:aspect>
+		</aop:config>	
 	
 </beans:beans>
