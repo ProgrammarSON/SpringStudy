@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true" /> <!-- 언더바 자동 설정 -->
+	</settings>
+		
+	<!-- Alias 설정 -->
+ 	<typeAliases>
+		<typeAlias alias="user" type="com.company.hellospring.UserDTO" />	<!-- alias는 별칭 -->
+		<typeAlias alias="board" type="com.company.hellospring.board.BoardDTO"/>
+<!-- 	<typeAlias alias="employeeSearch" type="com.yedam.app.emp.EmployeeSearchVO" />
+		<typeAlias alias="employee" type="com.yedam.app.emp.EmployeeVO" />
+		<typeAlias alias="comments" type="com.yedam.app.board.CommentsVO" />-->
+	</typeAliases>
+	
+
+	
+</configuration>

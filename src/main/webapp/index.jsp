@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%response.sendRedirect("./getUsers.do"); %>
+<%response.sendRedirect("./getBoards.do"); %>
 </body>
 </html>

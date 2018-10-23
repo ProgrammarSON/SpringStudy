@@ -1,4 +1,4 @@
-package com.company.hellospring;
+package com.company.hellospring.common;
 
 public class LogAdvice {
 	public void printLog() {

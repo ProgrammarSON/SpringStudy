@@ -19,9 +19,30 @@ public class Usercontroller {
 		return "users/getUsers";
 	}
 	
+	//수정폼
 	@RequestMapping("/updateUsersForm.do")
 	public String updateUsersForm(Model model, UserDTO dto) {
 		model.addAttribute("user", userService.getUser(dto));
 		return "users/updateUsers";
+	}
+	
+	//수정처리
+	@RequestMapping("/updateUser.do")
+	public String updateUser(Model model, UserDTO dto) {
+		model.addAttribute("user", userService.updateUser(dto));
+		return "redirect:/getUsers.do";
+	}
+	
+	//등록폼
+	@RequestMapping("/insertUserForm.do")
+	public String insertUsersForm(Model model, UserDTO dto) {
+		return "users/insertUser";
+	}
+	
+	//등록처리
+	@RequestMapping("/insertUser.do")
+	public String insertUser(Model model, UserDTO dto) {
+		model.addAttribute("user", userService.insertUser(dto));
+		return "redirect:/getUsers.do";
 	}
 }
