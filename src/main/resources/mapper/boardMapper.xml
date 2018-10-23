@@ -9,4 +9,21 @@
 <select id="getBoard" resultType="board" parameterType="board"> <!-- resulttype = 반환  parametertype= 파라미터 값 받음-->
 	SELECT * FROM BOARD WHERE SEQ = #{seq}
 </select>
+
+
+<!-- board.seq == seq -->
+<!-- out_msg는 카멜케이스 적용 대상이 아님 -->
+<insert id="insertBoardProc" statementType="CALLABLE" parameterType="board"> 
+{ 
+	call BOARD_INS_PROC
+	(
+		#{title},
+		#{writer},
+		#{content, mode=IN, jdbcType=VARCHAR, javaType=string},
+		#{seq, mode=OUT, jdbcType=NUMERIC, javaType=string},
+		#{out_msg, mode=OUT, jdbcType=VARCHAR, javaType=string}
+	)
+	
+}
+</insert>
 </mapper> 

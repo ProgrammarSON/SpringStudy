@@ -15,4 +15,8 @@ public class BoardDAOMybatis {
 		System.out.println("board 목록 조회=====");
 		return mybatis.selectList("board.getBoards");
 	}
+	
+	public int insertBoardProc(BoardDTO dto) {
+		return mybatis.insert("board.insertBoardProc", dto);
+	}
 }

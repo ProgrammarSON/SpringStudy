@@ -18,18 +18,22 @@ public class UserDAOMybatis {
 	}
 	//단건조회
 	public UserDTO getUser(UserDTO dto) {
-		return null;
+		System.out.println("mybatis 단건 조회 =======");
+		return mybatis.selectOne("user.getUser", dto);
 	}
 	//등록
 	public int insertUser(UserDTO dto) {
-		return 0;
+		System.out.println("mybatis 사용자 등록 =======");
+		return mybatis.insert("user.insertUser", dto);
 	}
 	//수정
 	public int updateUser(UserDTO dto) {
-		return 0;
+		System.out.println("mybatis 사용자 수정 =======");
+		return mybatis.update("user.updateUser",dto);
 	}	
 	//삭제
 	public int deleteUser(UserDTO dto) {
-		return 0;
+		System.out.println("mybatis 사용자 삭제 =======");
+		return mybatis.delete("user.deleteUser", dto);
 	}
 }

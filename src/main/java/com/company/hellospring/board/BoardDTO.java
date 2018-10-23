@@ -7,6 +7,7 @@ public class BoardDTO {
 	String content;
 	String regdate;
 	String cnt;
+	String out_msg;
 	
 	public String getSeq() {
 		return seq;
@@ -43,6 +44,13 @@ public class BoardDTO {
 	}
 	public void setCnt(String cnt) {
 		this.cnt = cnt;
+	}
+		
+	public String getOut_msg() {
+		return out_msg;
+	}
+	public void setOut_msg(String out_msg) {
+		this.out_msg = out_msg;
 	}
 	
 	@Override

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">	<!-- dtd => 쿼리 태그들을 정리해놓은 파일 -->
+<mapper namespace="emp">
+
+<!-- top-n 급여가 높은직원 3명 -->
+<select id="getSalaryTop3" resultType="com.company.hellospring.emp.EmpDTO">
+			
+SELECT *
+	FROM (	SELECT e.*
+			FROM hr.employees e
+			WHERE salary is not null
+			ORDER BY salary desc
+		 )
+ <!-- CDATA를 쓰는 이유는 비교 (< or >) 문자를 element와 비교 하기 위함 -->
+<![CDATA[
+WHERE rownum <= 3
+]]>	
+</select>
+
+<!-- 검색 조건이 있는 목록 조회 동적쿼리 -->
+<select id="getEmps" resultType="com.company.hellospring.emp.EmpDTO">
+	SELECT *
+	  FROM HR.EMPLOYEES
+	 <where>
+	 	<if test="firstName != null and firstName != '' ">
+	 		FIRST_NAME = #{firstName}
+	 	</if>
+	 	<if test="departmentId != null and departmentId != '' ">
+	 		AND DEPARTMENT_ID = #{departmentId}
+	 	</if>
+	 	<if test="salary != null and salary != '' ">
+	 		<![CDATA[ AND SALARY <  #{salary} ]]> 
+	 	</if>
+	 </where>
+	 ORDER BY EMPLOYEE_ID 
+</select>
+
+<resultMap type="java.util.HashMap" id="empDeptMap">
+	<result column="DEPARTMENT_NAME" property="deptName"/>	<!-- column명을 property로 mapping -->
+	<result column="FIRST_NAME" property="fname"/>
+</resultMap>
+
+<!-- 부서명이 포함된 사원조회 (조인) map-->
+<select id="getEmpDept" resultMap="empDeptMap">
+	SELECT DEPARTMENT_NAME , FIRST_NAME 			<!-- mapping 방법은 alians or resultmap -->
+	  FROM HR.EMPLOYEES E JOIN HR.DEPARTMENTS D
+	  	ON (E.DEPARTMENT_ID = D.DEPARTMENT_ID)
+</select>
+
+<!-- 전체건수 (int) -->
+<select id="getCnt" resultType="int">
+	SELECT count(*) FROM hr.employees
+</select>
+
+<!-- 498 페이지 -->
+<insert id="insertEmp" parameterType="com.company.hellospring.emp.EmpDTO">
+	<selectKey keyProperty="employeeId" resultType="string" order="BEFORE">	<!-- order before는 메인 쿼리문을 실행하기전 이것부터 먼저 실행해라 -->
+		select max(employee_id)+1 FROM HR.EMPLOYEES
+	</selectKey>
+	INSERT INTO HR.EMPLOYEES (EMPLOYEE_ID,
+								LAST_NAME,
+									EMAIL,
+								HIRE_DATE,
+								   JOB_ID)
+			VALUES( #{employeeId},
+					#{lastName},
+					#{email},
+					#{hireDate},
+					#{jobId})
+</insert>
+</mapper> 

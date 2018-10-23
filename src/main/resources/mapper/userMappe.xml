@@ -1,8 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
- "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">	<!-- dtd => 쿼리 태그들을 정리해놓은 파일 -->
 <mapper namespace="user">
+
+<!-- 전체조회 -->
 <select id="getUsers" resultType="user"> <!-- sql-map-config-spring에서 지정한 user -->
 	SELECT * FROM USERS ORDER BY ID
 </select>
+
+<!-- 단건조회 -->
+<select id="getUser" resultType="user" parameterType="user">
+	SELECT * FROM USERS WHERE ID = #{id} 
+</select>
+
+<!-- 등록 -->
+<insert id="insertUser" parameterType="user">	<!-- parameterType 생략 가능 -->
+  	INSERT INTO USERS(id, password, name, role)
+  	VALUES ( #{id},
+  			 #{password},
+  			 #{name},
+  			 #{role} )
+</insert>
+<!-- 수정 -->
+<update id="updateUser" parameterType="user">
+	UPDATE USERS
+	SET PASSWORD = #{password},
+		NAME = #{name},
+		ROLE = #{role}
+	WHERE id = #{id}
+</update>
+<!-- 삭제 -->
+<delete id="deleteUser" parameterType="user">
+	DELETE FROM USERS WHERE = #{id}
+</delete>
 </mapper> 

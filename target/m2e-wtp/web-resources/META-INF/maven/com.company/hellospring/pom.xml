@@ -71,7 +71,7 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.15</version>
-			<exclusions>
+			<exclusions>		<!-- 예외사항들 -->
 				<exclusion>
 					<groupId>javax.mail</groupId>
 					<artifactId>mail</artifactId>
@@ -164,7 +164,17 @@
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.2.4</version>
-		</dependency>		
+		</dependency>
+		
+		<!-- log jdbc -->
+		<dependency>
+			<groupId>org.lazyluke</groupId>
+			<artifactId>log4jdbc-remix</artifactId>
+			<version>0.2.7</version>
+		</dependency>
+		
+
+		
 	</dependencies>
 	<build>
 		<plugins>
