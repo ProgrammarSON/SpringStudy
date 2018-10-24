@@ -23,7 +23,7 @@
 		#{seq, mode=OUT, jdbcType=NUMERIC, javaType=string},
 		#{out_msg, mode=OUT, jdbcType=VARCHAR, javaType=string}
 	)
-	
+	<!-- type이 같을경우 뒤에 타입 type은 생략 가능 -->	
 }
 </insert>
 </mapper> 

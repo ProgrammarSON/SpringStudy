@@ -12,9 +12,13 @@ public class UserDAOMybatis {
 	
 	@Autowired SqlSessionTemplate mybatis;	
 	//전체조회
-	public List<UserDTO> getUsers(){
+	public List<UserDTO> getUsers(UserSearchDTO searchDto){
 		System.out.println("user mybatis 목록 조회=======");
-		return mybatis.selectList("user.getUsers");	//sql-map-config.xml에서 설정한 alias user를 따른다.
+		return mybatis.selectList("user.getUsers",searchDto);	//sql-map-config.xml에서 설정한 alias user를 따른다.
+	}
+	//건수조회
+	public int getCnt(UserSearchDTO searchDto) {
+		return mybatis.selectOne("user.getCnt", searchDto);
 	}
 	//단건조회
 	public UserDTO getUser(UserDTO dto) {

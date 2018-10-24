@@ -32,11 +32,11 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<UserDTO> getUsers() {
+	public List<UserDTO> getUsers(UserSearchDTO searchDto) {
 		//logAdvice.printLogging();	//횡단관심
 		System.out.println("사용자 목록 조회임");
 		//int a = 5/0;			//exception 보기를 위한 일부러 오류 처리 한것
-		return dao.getUsers();	//핵심관심
+		return dao.getUsers(searchDto);	//핵심관심
 	}
 
 	@Override
@@ -47,6 +47,11 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int deleteUser(UserDTO dto) {
 		return dao.deleteUser(dto);
+	}
+
+	@Override
+	public int getCnt(UserSearchDTO searchDto) {
+		return dao.getCnt(searchDto);
 	}
 	
 }

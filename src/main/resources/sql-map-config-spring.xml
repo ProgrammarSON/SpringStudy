@@ -11,6 +11,7 @@
  	<typeAliases>
 		<typeAlias alias="user" type="com.company.hellospring.UserDTO" />	<!-- alias는 별칭 -->
 		<typeAlias alias="board" type="com.company.hellospring.board.BoardDTO"/>
+		<typeAlias alias="userSearch" type="com.company.hellospring.UserSearchDTO" />	<!-- alias는 별칭 -->
 <!-- 	<typeAlias alias="employeeSearch" type="com.yedam.app.emp.EmployeeSearchVO" />
 		<typeAlias alias="employee" type="com.yedam.app.emp.EmployeeVO" />
 		<typeAlias alias="comments" type="com.yedam.app.board.CommentsVO" />-->

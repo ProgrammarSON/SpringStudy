@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.company.hellospring.common.Paging;
+
 @Controller
 public class Usercontroller {
 	
@@ -14,8 +16,27 @@ public class Usercontroller {
 	UserDAO userDAO;
 */	
 	@RequestMapping("/getUsers.do")
-	public String getUsers(Model model) {
-		model.addAttribute("list",userService.getUsers());
+	public String getUsers(Model model 
+						   ,UserSearchDTO searchDto
+						   ,Paging paging) {
+		//조회할 레코드 건수
+		paging.setPageUnit(3); //3건식 페이징 처리
+		
+		// 현재페이지번호 . 없으면 1page로 설정
+		if(paging.getPage() == null) {
+			paging.setPage(1);
+		}
+		
+		//전체건수
+		int total= userService.getCnt(searchDto);
+		paging.setTotalRecord(total);
+		model.addAttribute("paging",paging);
+		
+		//시작 /마지막 레코드 번호
+		searchDto.setStart(paging.getFirst());
+		searchDto.setEnd(paging.getLast());
+		model.addAttribute("list",userService.getUsers(searchDto));
+			
 		return "users/getUsers";
 	}
 	

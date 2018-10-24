@@ -1,10 +1,10 @@
 package com.company.hellospring;
 
 public class UserDTO {
-	private String id;
-	private String password;
-	private String name;
-	private String role;
+	protected String id;
+	protected String password;
+	protected String name;
+	protected String role;
 	
 	public String getId() {
 		return id;

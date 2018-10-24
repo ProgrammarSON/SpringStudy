@@ -13,5 +13,6 @@ public interface UserService {
 	//단건조회
 	public UserDTO getUser(UserDTO dto);
 	//전체조회
-	public List<UserDTO> getUsers();
+	public List<UserDTO> getUsers(UserSearchDTO searchDto);
+	public int getCnt(UserSearchDTO searchDto);
 }

@@ -4,8 +4,46 @@
 <mapper namespace="user">
 
 <!-- 전체조회 -->
-<select id="getUsers" resultType="user"> <!-- sql-map-config-spring에서 지정한 user -->
-	SELECT * FROM USERS ORDER BY ID
+<!-- collections = test item = var -->
+<select id="getUsers" resultType="user" parameterType="userSearch"> <!-- sql-map-config-spring에서 지정한 user -->
+SELECT * FROM ( SELECT u.*, rownum rn FROM (	
+	SELECT * FROM USERS 
+	<where>
+		<if test="ids != null">
+			ID IN
+			<foreach collection="ids" open="(" close=")" separator="," item="item">
+				#{item}
+			</foreach>
+		</if>
+		<if test="searchCondition == 'id'">
+			AND ID LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="searchCondition == 'name'">
+			AND NAME LIKE '%' || #{searchKeyword} || '%'
+		</if>
+	</where>
+	ORDER BY ID
+	)u  ) a WHERE rn between #{start} and #{end}
+</select>
+
+<select id="getCnt" resultType="int" parameterType="userSearch">
+	SELECT COUNT(*)
+	FROM USERS
+	<where>
+		<if test="ids != null">
+			ID IN
+			<foreach collection="ids" open="(" close=")" separator="," item="item">
+				#{item}
+			</foreach>
+		</if>
+		<if test="searchCondition == 'id'">
+			AND ID LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="searchCondition == 'name'">
+			AND NAME LIKE '%' || #{searchKeyword} || '%'
+		</if>
+	</where>
+	ORDER BY ID		
 </select>
 
 <!-- 단건조회 -->
