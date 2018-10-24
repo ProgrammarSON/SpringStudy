@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.company.hellospring.common.Paging;
 
@@ -16,7 +17,7 @@ public class Usercontroller {
 	UserDAO userDAO;
 */	
 	@RequestMapping("/getUsers.do")
-	public String getUsers(Model model 
+	public ModelAndView getUsers(ModelAndView mv 
 						   ,UserSearchDTO searchDto
 						   ,Paging paging) {
 		//조회할 레코드 건수
@@ -30,14 +31,16 @@ public class Usercontroller {
 		//전체건수
 		int total= userService.getCnt(searchDto);
 		paging.setTotalRecord(total);
-		model.addAttribute("paging",paging);
-		
+		//model.addAttribute("paging",paging);
+		mv.addObject("paging",paging);
 		//시작 /마지막 레코드 번호
 		searchDto.setStart(paging.getFirst());
 		searchDto.setEnd(paging.getLast());
-		model.addAttribute("list",userService.getUsers(searchDto));
-			
-		return "users/getUsers";
+		//model.addAttribute("list",userService.getUsers(searchDto));
+		mv.addObject("list",userService.getUsers(searchDto));
+		
+		mv.setViewName("users/getUsers");
+		return mv;
 	}
 	
 	//수정폼

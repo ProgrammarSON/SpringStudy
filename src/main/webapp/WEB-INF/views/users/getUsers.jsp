@@ -17,13 +17,18 @@
 <body>
 <a href="insertUserForm.do">회원등록</a>
 <div>
+<%-- <c:if test="${userSearchDTO.searchKeyword == 'id'}"> <%out.print("selected='selected'"); %></c:if> --%>
+
 <form action="getUsers.do" name="frm">
 	<input type="hidden" name="page" value="1">
 	<select name="searchCondition">
 		<option value="id">아이디</option>
 		<option value="name">이름</option>
 	</select>
-	<input type="text" name="searchKeyword">
+	<script>
+		document.frm.searchCondition.value='${userSearchDTO.searchCondition}';
+	</script>
+	<input type="text" name="searchKeyword" value="${userSearchDTO.searchKeyword}">
 	<input type="submit" value="검색">
 </form>
 </div>
