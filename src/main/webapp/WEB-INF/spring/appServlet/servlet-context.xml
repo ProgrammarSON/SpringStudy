@@ -1,141 +1,199 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 
-	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
-
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-	<resources mapping="/resources/**" location="/resources/" />
-	<resources mapping="/images/**" location="/images/" />
-
-<beans:bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="1"
-			p:viewClass="org.springframework.web.servlet.view.tiles3.TilesView" />
-<!--Don't add suffix or prefix like you do with .jsp files-->
-<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer" >
-	<beans:property name="definitions">
-	<beans:value>/WEB-INF/tiles.xml</beans:value>
-	</beans:property>
-</beans:bean>
-
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-<!-- 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
-		<beans:property name="suffix" value=".jsp" />
-	</beans:bean> -->
 	
-	<context:component-scan base-package="com.company.hellospring" />
+	<mvc:annotation-driven/>
+	<!-- <annotation-driven /> -->
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/images/**" location="/images/" />
+
+	<beans:bean
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+		p:order="1"
+		p:viewClass="org.springframework.web.servlet.view.tiles3.TilesView" />
+	<!--Don't add suffix or prefix like you do with .jsp files -->
+	<beans:bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<beans:property name="definitions">
+			<beans:value>/WEB-INF/tiles.xml</beans:value>
+		</beans:property>
+	</beans:bean>
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+	<!-- <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
+		<beans:property name="prefix" value="/WEB-INF/views/" /> <beans:property 
+		name="suffix" value=".jsp" /> </beans:bean> -->
+
+	<context:component-scan
+		base-package="com.company.hellospring" />
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>	<!-- aop config 대처 -->
-	
+
 	<!-- datasource 설정 -->
-	<beans:bean id="dataSourceSpied" class="org.apache.commons.dbcp.BasicDataSource">
-		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></beans:property>
-		<beans:property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></beans:property>
+	<beans:bean id="dataSourceSpied"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<beans:property name="driverClassName"
+			value="oracle.jdbc.driver.OracleDriver"></beans:property>
+		<beans:property name="url"
+			value="jdbc:oracle:thin:@localhost:1521:xe"></beans:property>
 		<beans:property name="username" value="spring"></beans:property>
 		<beans:property name="password" value="spring"></beans:property>
 	</beans:bean>
-	
-	<beans:bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+
+	<beans:bean id="dataSource"
+		class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
 		<beans:constructor-arg ref="dataSourceSpied" />
 		<beans:property name="logFormatter">
-		<beans:bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
-			<beans:property name="loggingType" value="MULTI_LINE" />
-			<beans:property name="sqlPrefix" value="SQL:::" />
-		</beans:bean>
+			<beans:bean
+				class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+				<beans:property name="loggingType" value="MULTI_LINE" />
+				<beans:property name="sqlPrefix" value="SQL:::" />
+			</beans:bean>
 		</beans:property>
 	</beans:bean>
-	
+
 	<!-- spring jdbc 설정 -->
-	<beans:bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-		<beans:property name="dataSource" ref="dataSource"/>
-	</beans:bean>
-	
-	<!-- mybatis 설정 -->
-	<beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<beans:bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
 		<beans:property name="dataSource" ref="dataSource" />
-		<beans:property name="configLocation" value="classpath:sql-map-config-spring.xml" />	<!-- classpath는 resource 위치 -->
-		<beans:property name="mapperLocations" value="classpath:mapper/*.xml" />
 	</beans:bean>
-	
+
+	<!-- mybatis 설정 -->
+	<beans:bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="configLocation"
+			value="classpath:sql-map-config-spring.xml" />	<!-- classpath는 resource 위치 -->
+		<beans:property name="mapperLocations"
+			value="classpath:mapper/*.xml" />
+	</beans:bean>
+
 	<beans:bean class="org.mybatis.spring.SqlSessionTemplate">
 		<beans:constructor-arg ref="sqlSession"></beans:constructor-arg>
 	</beans:bean>
-		
-	
-	<beans:bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<beans:property name="dataSource" ref="dataSource"/>
+
+
+	<beans:bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<beans:property name="dataSource" ref="dataSource" />
 	</beans:bean>
-	
+
 	<tx:advice id="txAdvice" transaction-manager="txManager">
 		<tx:attributes>
-			<tx:method name="get*" read-only="true"/>		<!-- transaction 처리를 해라 (autoCommit(false)) -->
-			<tx:method name="*"/>
+			<tx:method name="get*" read-only="true" />		<!-- transaction 처리를 해라 (autoCommit(false)) -->
+			<tx:method name="*" />
 		</tx:attributes>
 	</tx:advice>
+
+
+	<!-- MultipartResolver 설정 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="100000000" />
+		<beans:property name="maxInMemorySize" value="1000000" />
+		<!-- <beans:property name="uploadTempDir" value="C:/Temp" /> -->
+	</beans:bean>
+
+	<!-- 예외 처리 -->
+	<beans:bean id="exceptionResolver"
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<beans:property name="exceptionMappings">
+			<beans:props>
+				<beans:prop key="java.lang.ArithmeticException">
+					error/ArithmeticError
+				</beans:prop>
+			</beans:props>
+		</beans:property>
+		<beans:property name="defaultErrorView"
+			value="error/error500">
+		</beans:property>
+		</beans:bean>
+		<!-- 다국어 처리 -->
+			<beans:bean id="messageSource"
+				class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+				<beans:property name="basenames">
+					<beans:list>
+						<beans:value>classpath:/message/message-common</beans:value>	<!-- classpath는 java or resource -->
+					</beans:list>
+				</beans:property>
+				<beans:property name="cacheSeconds">
+					<beans:value>60</beans:value>
+				</beans:property>
+			</beans:bean>
+
+			<!-- interceptor 등록 -->
+<!-- 			<beans:bean
+				class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+				<beans:property name="interceptors">
+					<beans:list>
+						<beans:ref bean="localeChangeInterceptor" />
+					</beans:list>
+				</beans:property>
+			</beans:bean> -->
+
+			<beans:bean id="localeResolver"
+				class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />	<!-- locale정보를 session에 저장 -->
+			
+			<!-- 쿠키를 이용한 Locale 이용시 <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"/> -->
+		<mvc:interceptors>	
+			<beans:bean id="localeChangeInterceptor"
+				class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+				<beans:property name="paramName" value="language" />	<!-- paramName을 통해 국가언어 설정 -->
+			</beans:bean>
+		</mvc:interceptors>
+	
 	
 	<aop:config>
-		<aop:pointcut id="allpointcut" expression="execution(* com.company..*Impl.*(..))"/>	 
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="allpointcut"/>
+		<aop:pointcut id="allpointcut"
+			expression="execution(* com.company..*Impl.*(..))" />
+		<aop:advisor advice-ref="txAdvice"
+			pointcut-ref="allpointcut" />
 	</aop:config>
-	
-	<!--  <beans:bean id="log" class="com.company.hellospring.common.LogAdvice"/>
-		<beans:bean id="log4j" class="com.company.hellospring.common.Log4jAdvice"/>
-		<beans:bean id="before" class="com.company.hellospring.common.BeforeAdvice"/>
-		<beans:bean id="after" class="com.company.hellospring.common.AfterAdvice"/>					무조건 실행
-		<beans:bean id="afterreturn" class="com.company.hellospring.common.AfterReturningAdvice"/>	정상실행
-		<beans:bean id="afterthrow" class="com.company.hellospring.common.AfterThrowingAdvice"/>	오류실행
-		<beans:bean id="around" class="com.company.hellospring.common.AroundAdvice"/>
-		
-	 	<aop:config>
-			<aop:pointcut expression="execution(* com.company..*Impl.*(..))" 
-						  id="allpointcut"/>	com.company 하위패키지 포함 impl로 끝나는 모든 class의 모든 메소드 
-						  
-			<aop:pointcut expression="execution(* com.company..*Impl.get*(..))" 
-						  id="getpointcut"/>	com.company 하위패키지 포함 impl로 끝나는 모든 class의 get 메소드 
-	
-			<aop:aspect ref="before">
-				<aop:before method="beforeLog" pointcut-ref="allpointcut"/>
-			</aop:aspect>
-			
-			<aop:aspect ref="after">  						무조건 실행
-				<aop:after method="finallyLog" pointcut-ref="allpointcut"/>
-			</aop:aspect>		
-			
-			<aop:aspect ref="afterreturn">					정상실행
-				<aop:after-returning method="afterLog" pointcut-ref="allpointcut"
-						returning="returnObj" />	returning시 bind값을 반환하기 위해 쓰인다
-			</aop:aspect>
-			
-			<aop:aspect ref="afterthrow">					오류실행
-				<aop:after-throwing method="exceptionLog" pointcut-ref="allpointcut"/>
-			</aop:aspect>	
-			
-			<aop:aspect ref="around">
-				<aop:around method="aroundLog" pointcut-ref="allpointcut"/>
-			</aop:aspect>    -->
-			
-<!-- 			<aop:aspect ref="log">
-				<aop:before method="printLog" pointcut-ref="allpointcut"/>	allpointcut 실행전 수행할 메소드 선택
-			</aop:aspect>
- -->			
-			 
-	<!-- 		<aop:aspect ref="log4j">
-				<aop:before method="printLogging" pointcut-ref="getpointcut"/>	getpointcut 실행전 수행할 메소드 선택
-				<aop:after method="printLogging" pointcut-ref="getpointcut"/>
-			</aop:aspect>
-	 -->		
-		<!-- </aop:config> -->	
-	
+
+	<!-- <beans:bean id="log" class="com.company.hellospring.common.LogAdvice"/> 
+		<beans:bean id="log4j" class="com.company.hellospring.common.Log4jAdvice"/> 
+		<beans:bean id="before" class="com.company.hellospring.common.BeforeAdvice"/> 
+		<beans:bean id="after" class="com.company.hellospring.common.AfterAdvice"/> 
+		무조건 실행 <beans:bean id="afterreturn" class="com.company.hellospring.common.AfterReturningAdvice"/> 
+		정상실행 <beans:bean id="afterthrow" class="com.company.hellospring.common.AfterThrowingAdvice"/> 
+		오류실행 <beans:bean id="around" class="com.company.hellospring.common.AroundAdvice"/> 
+		<aop:config> <aop:pointcut expression="execution(* com.company..*Impl.*(..))" 
+		id="allpointcut"/> com.company 하위패키지 포함 impl로 끝나는 모든 class의 모든 메소드 <aop:pointcut 
+		expression="execution(* com.company..*Impl.get*(..))" id="getpointcut"/> 
+		com.company 하위패키지 포함 impl로 끝나는 모든 class의 get 메소드 <aop:aspect ref="before"> 
+		<aop:before method="beforeLog" pointcut-ref="allpointcut"/> </aop:aspect> 
+		<aop:aspect ref="after"> 무조건 실행 <aop:after method="finallyLog" pointcut-ref="allpointcut"/> 
+		</aop:aspect> <aop:aspect ref="afterreturn"> 정상실행 <aop:after-returning method="afterLog" 
+		pointcut-ref="allpointcut" returning="returnObj" /> returning시 bind값을 반환하기 
+		위해 쓰인다 </aop:aspect> <aop:aspect ref="afterthrow"> 오류실행 <aop:after-throwing 
+		method="exceptionLog" pointcut-ref="allpointcut"/> </aop:aspect> <aop:aspect 
+		ref="around"> <aop:around method="aroundLog" pointcut-ref="allpointcut"/> 
+		</aop:aspect> -->
+
+	<!-- <aop:aspect ref="log"> <aop:before method="printLog" pointcut-ref="allpointcut"/> 
+		allpointcut 실행전 수행할 메소드 선택 </aop:aspect> -->
+
+	<!-- <aop:aspect ref="log4j"> <aop:before method="printLogging" pointcut-ref="getpointcut"/> 
+		getpointcut 실행전 수행할 메소드 선택 <aop:after method="printLogging" pointcut-ref="getpointcut"/> 
+		</aop:aspect> -->
+	<!-- </aop:config> -->
+
 </beans:beans>

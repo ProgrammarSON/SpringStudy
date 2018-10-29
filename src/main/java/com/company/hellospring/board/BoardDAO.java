@@ -19,4 +19,8 @@ public class BoardDAO {
 	public int insertBoardProc(BoardDTO dto) {
 		return mybatis.insert("board.insertBoardProc", dto);
 	}
+	
+	public int insertBoard(BoardDTO dto) {
+		return mybatis.insert("board.insertBoard", dto);
+	}
 }

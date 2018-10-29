@@ -3,6 +3,28 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+<!-- 	<error-page>
+		<error-code>500</error-code>
+		<location>/error/error500.jsp</location>
+	</error-page> -->
+	
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -30,4 +52,5 @@
 		<url-pattern>/</url-pattern>	<!-- 모든 요청은 servlet에 온다는 뜻, .do  .jpg 등등  -->
 	</servlet-mapping>					<!-- jpg와 같은 servlet으로 처리할 필요가 없으므로 servlet-context.xml에서 mapping 시킨다) -->
 
+	
 </web-app>

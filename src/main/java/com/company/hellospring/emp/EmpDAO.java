@@ -38,4 +38,8 @@ public class EmpDAO {
 		System.out.println(r);
 		return r;
 	}
+	
+	public List<Map<String,Object>> getEmpChart(){
+		return mybatis.selectList("emp.getEmpChart");
+	}
 }

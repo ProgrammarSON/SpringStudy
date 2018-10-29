@@ -192,6 +192,14 @@
 			<version>${org.apache.tiles-version}</version>
 		</dependency>
 
+		<!-- 파일 업로드 -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		
+		
 	</dependencies>
 	<build>
 		<plugins>

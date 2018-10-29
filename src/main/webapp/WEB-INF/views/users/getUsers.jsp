@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +21,8 @@
 </script>
 </head>
 <body>
+<h2><spring:message code="list.sample"/></h2>
+<hr>
 <img src="./images/Koala.jpg" style="width: 200px">
 <a href="insertUserForm.do">회원등록</a>
 <div>
@@ -43,7 +46,7 @@
 		document.frm.searchCondition.value='${userSearchDTO.searchCondition}';
 	</script>
 	<input type="text" name="searchKeyword" value="${userSearchDTO.searchKeyword}">
-	<input type="submit" value="검색">
+	<input type="submit" value="<spring:message code="button.search"/>">
 </form>
 </div>
 <table border="1" style="width: 500px;">
@@ -53,7 +56,7 @@
 	<td><a href="#" onclick="sort('password')">패스워드</a></td>
 	<td><a href="#" onclick="sort('role')">롤</a></td></tr>	
 	<c:forEach items="${list}" var="user">
-		<tr><td><a href="updateUsersForm.do?id=${user.id}">${user.id}</a></td><td>${user.name}</td><td>${user.password}</td><td>${user.role}</td></tr>
+		<tr><td><a href="updateUsersForm.do/${user.id}">${user.id}</a></td><td>${user.name}</td><td>${user.password}</td><td>${user.role}</td></tr>
 	</c:forEach>
 </table>
 <my:paging paging="${paging}" jsFunc="go_page"/>

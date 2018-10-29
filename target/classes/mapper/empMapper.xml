@@ -69,4 +69,13 @@ WHERE rownum <= 3
 					#{hireDate},
 					#{jobId})
 </insert>
+
+<select id="getEmpChart" resultType="map">
+	SELECT DEPARTMENT_NAME  AS "departmentName",
+			count(FIRST_NAME) as "cnt"
+	FROM 	HR.EMPLOYEES E JOIN HR.DEPARTMENTS D
+	ON (E.department_id = D.department_id)
+	GROUP BY DEPARTMENT_NAME
+			
+</select>
 </mapper> 

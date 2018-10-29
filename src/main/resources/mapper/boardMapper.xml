@@ -26,4 +26,16 @@
 	<!-- type이 같을경우 뒤에 타입 type은 생략 가능 -->	
 }
 </insert>
+
+<insert id="insertBoard" parameterType="board">
+	<selectKey keyProperty="seq" resultType="string" order="BEFORE">	<!-- order before는 메인 쿼리문을 실행하기전 이것부터 먼저 실행해라 -->
+		select max(seq)+1 FROM BOARD
+	</selectKey>
+	
+	INSERT INTO BOARD (SEQ, TITLE, WRITER, CONTENT, UPLOADFILENAME)
+	VALUES(#{seq}, #{title}, #{writer}, #{content} , #{uploadFileName})
+
+</insert>
+
+
 </mapper> 
