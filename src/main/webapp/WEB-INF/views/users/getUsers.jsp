@@ -12,18 +12,32 @@
 		document.frm.page.value=p;
 		document.frm.submit();
 	}
+	
+	function sort(s){
+		document.frm.sort.value=s;
+		document.frm.submit();
+	}
 </script>
 </head>
 <body>
+<img src="./images/Koala.jpg" style="width: 200px">
 <a href="insertUserForm.do">회원등록</a>
 <div>
 <%-- <c:if test="${userSearchDTO.searchKeyword == 'id'}"> <%out.print("selected='selected'"); %></c:if> --%>
 
 <form action="getUsers.do" name="frm">
 	<input type="hidden" name="page" value="1">
+	<input type="hidden" name="sort" value="id">
+	role<select name="role">
+			<option value="">목록</option>
+		<c:forEach items="${roleMap}" var="temp">
+			<option value="${temp.key}">${temp.value}</option>
+		</c:forEach>
+	</select>
 	<select name="searchCondition">
 		<option value="id">아이디</option>
 		<option value="name">이름</option>
+		<option value="role">직급</option>
 	</select>
 	<script>
 		document.frm.searchCondition.value='${userSearchDTO.searchCondition}';
@@ -33,7 +47,11 @@
 </form>
 </div>
 <table border="1" style="width: 500px;">
-	<tr><td>아이디</td><td>이름</td><td>패스워드</td><td>롤</td></tr>	
+	<tr>
+	<td><a href="#" onclick="sort('id')">아이디</a></td>
+	<td><a href="#" onclick="sort('name')">이름</a></td>
+	<td><a href="#" onclick="sort('password')">패스워드</a></td>
+	<td><a href="#" onclick="sort('role')">롤</a></td></tr>	
 	<c:forEach items="${list}" var="user">
 		<tr><td><a href="updateUsersForm.do?id=${user.id}">${user.id}</a></td><td>${user.name}</td><td>${user.password}</td><td>${user.role}</td></tr>
 	</c:forEach>

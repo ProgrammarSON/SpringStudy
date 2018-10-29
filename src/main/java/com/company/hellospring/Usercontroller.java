@@ -1,14 +1,21 @@
 package com.company.hellospring;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.company.hellospring.common.Paging;
 
 @Controller
+@SessionAttributes("user")
 public class Usercontroller {
 	
 	@Autowired	//DI(Dependency Injection)
@@ -16,6 +23,17 @@ public class Usercontroller {
 	/*	@Autowired
 	UserDAO userDAO;
 */	
+	@ModelAttribute("roleMap")	//mode.addAttribute("roleMap",map) 이랑 동등
+	public Map<String, String> roleMap(){
+		Map<String, String> map = new HashMap<String,String>();
+		map.put("Admin", "관리자");
+		map.put("User", "사용자");
+		map.put("ssss", "최고관리자");
+		return map;
+	}
+	//requestMapping 전에 먼저 실행
+	
+	
 	@RequestMapping("/getUsers.do")
 	public ModelAndView getUsers(ModelAndView mv 
 						   ,UserSearchDTO searchDto
@@ -41,28 +59,27 @@ public class Usercontroller {
 		
 		mv.setViewName("users/getUsers");
 		return mv;
-	}
-	
+	}	
 	//수정폼
 	@RequestMapping("/updateUsersForm.do")
 	public String updateUsersForm(Model model, UserDTO dto) {
 		model.addAttribute("user", userService.getUser(dto));
 		return "users/updateUsers";
-	}
-	
+	}	
 	//수정처리
 	@RequestMapping("/updateUser.do")
-	public String updateUser(Model model, UserDTO dto) {
+	public String updateUser(Model model, 
+							 UserDTO dto,
+							 SessionStatus ss) {
 		model.addAttribute("user", userService.updateUser(dto));
+		ss.setComplete();  			//session complete을 안할시 session attribute에 적용이 안됨
 		return "redirect:/getUsers.do";
-	}
-	
+	}	
 	//등록폼
 	@RequestMapping("/insertUserForm.do")
 	public String insertUsersForm(Model model, UserDTO dto) {
 		return "users/insertUser";
-	}
-	
+	}	
 	//등록처리
 	@RequestMapping("/insertUser.do")
 	public String insertUser(Model model, UserDTO dto) {

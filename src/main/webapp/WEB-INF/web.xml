@@ -27,7 +27,7 @@
 		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
+		<url-pattern>/</url-pattern>	<!-- 모든 요청은 servlet에 온다는 뜻, .do  .jpg 등등  -->
+	</servlet-mapping>					<!-- jpg와 같은 servlet으로 처리할 필요가 없으므로 servlet-context.xml에서 mapping 시킨다) -->
 
 </web-app>

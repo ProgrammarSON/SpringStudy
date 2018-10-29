@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.company.hellospring.board.BoardDAOMybatis;
+import com.company.hellospring.board.BoardDAO;
 import com.company.hellospring.board.BoardDTO;
 import com.company.hellospring.emp.EmpDAO;
 import com.company.hellospring.emp.EmpDTO;
@@ -25,7 +25,7 @@ import com.company.hellospring.emp.EmpDTO;
 public class EmpDAOClient {
 	
 	@Autowired EmpDAO dao;
-	@Autowired BoardDAOMybatis boarddao;
+	@Autowired BoardDAO boarddao;
 	@Test
 	public void getCnt() {
 		//System.out.println("전체 건수: "+dao.getCnt());

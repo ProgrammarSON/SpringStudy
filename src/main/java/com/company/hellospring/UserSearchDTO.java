@@ -11,6 +11,8 @@ public class UserSearchDTO extends UserDTO{
 	private Integer end;
 	
 	private String[] ids;	//
+	
+	private String sort;
 
 	public String getSearchCondition() {
 		return searchCondition;
@@ -50,6 +52,14 @@ public class UserSearchDTO extends UserDTO{
 
 	public void setIds(String[] ids) {
 		this.ids = ids;
+	}
+	
+	public String getSort() {
+		return sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
 	}
 
 	@Override

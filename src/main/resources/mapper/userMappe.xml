@@ -21,10 +21,19 @@ SELECT * FROM ( SELECT u.*, rownum rn FROM (
 		<if test="searchCondition == 'name'">
 			AND NAME LIKE '%' || #{searchKeyword} || '%'
 		</if>
+		<if test="role != null and role != ''">
+			AND ROLE = #{role}
+		</if>		
 	</where>
-	ORDER BY ID
+	ORDER BY 
+	<choose>
+		<when test="sort != null and sort !=''">${sort}</when>
+		<otherwise>ID</otherwise>
+	</choose>
 	)u  ) a WHERE rn between #{start} and #{end}
 </select>
+<!-- ${a} == a , #{a} == 'a'  -->
+
 
 <select id="getCnt" resultType="int" parameterType="userSearch">
 	SELECT COUNT(*)
