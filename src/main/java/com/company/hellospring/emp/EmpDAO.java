@@ -29,7 +29,7 @@ public class EmpDAO {
 		return mybatis.selectList("emp.getEmps",dto);
 	}
 	
-	public List<HashMap<String,Object>> getEmpDept(){
+	public List<Map<String,Object>> getEmpDept(){
 		return mybatis.selectList("emp.getEmpDept");
 	}
 	

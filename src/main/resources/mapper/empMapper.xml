@@ -42,10 +42,27 @@ WHERE rownum <= 3
 </resultMap>
 
 <!-- 부서명이 포함된 사원조회 (조인) map-->
-<select id="getEmpDept" resultMap="empDeptMap">
-	SELECT DEPARTMENT_NAME , FIRST_NAME 			<!-- mapping 방법은 alians or resultmap -->
-	  FROM HR.EMPLOYEES E JOIN HR.DEPARTMENTS D
-	  	ON (E.DEPARTMENT_ID = D.DEPARTMENT_ID)
+<select id="getEmpDept" resultType="map">
+	<!-- SELECT DEPARTMENT_NAME , FIRST_NAME  -->			<!-- mapping 방법은 alians or resultmap -->
+	<!-- FROM HR.EMPLOYEES E JOIN HR.DEPARTMENTS D
+	  	 ON (E.DEPARTMENT_ID = D.DEPARTMENT_ID) -->
+	  	
+	 SELECT
+	     EMPLOYEES."EMPLOYEE_ID" 	AS "employeeId",
+	     EMPLOYEES."FIRST_NAME" 	AS "firstName",
+	     EMPLOYEES."LAST_NAME" 	AS "lastName",
+	     EMPLOYEES."EMAIL" 		AS "email",
+	     EMPLOYEES."PHONE_NUMBER" 	AS "phoneNumber",
+	     EMPLOYEES."HIRE_DATE" 	AS "hireDate",
+	     EMPLOYEES."JOB_ID" 		AS "jobId",
+	     EMPLOYEES."SALARY" 		AS "salary",
+	     EMPLOYEES."COMMISSION_PCT" 	AS "commissionPct",
+	     EMPLOYEES."MANAGER_ID" 	AS "managerId",
+	     EMPLOYEES."DEPARTMENT_ID" 	AS "departmentId",
+	     DEPARTMENTS."DEPARTMENT_NAME" 	AS "departmentName"
+	FROM "HR"."EMPLOYEES" EMPLOYEES  JOIN HR.DEPARTMENTS
+		  ON (EMPLOYEES.department_id = DEPARTMENTS.department_id)
+	ORDER BY EMPLOYEES.DEPARTMENT_ID
 </select>
 
 <!-- 전체건수 (int) -->

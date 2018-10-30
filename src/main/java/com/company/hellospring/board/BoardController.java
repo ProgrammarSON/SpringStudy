@@ -34,7 +34,7 @@ public class BoardController {
 	}
 	
 	//등록폼
-	@RequestMapping(value="insertBoard", method=RequestMethod.GET)
+	@RequestMapping(value="/insertBoard.do", method=RequestMethod.GET)
 	public String insertBoardForm() {
 		return "board/insertBoard";
 	}
@@ -47,10 +47,10 @@ public class BoardController {
 		//String folder = request.getSession().getServletContext().getRealPath("/images");
 		
 		//첨부파일 처리
-		MultipartFile uploadFile = board.getUploadFile();
+		//MultipartFile uploadFile = board.getUploadFile();
 			
 		/*다중파일 업로드시*/
-/*		MultipartFile[] uploadFile = board.getUploadFile();
+		MultipartFile[] uploadFile = board.getUploadFile();
 		String filename = "";
 		StringBuffer temp = new StringBuffer();
 		for(int i=0; i<uploadFile.length; i++) {
@@ -60,25 +60,26 @@ public class BoardController {
 				//브라우저에서 8859_1로 보냄으로 이것을 읽은다음 UTF-8로 인코딩을 한다.
 				filename = uploadFile[i].getOriginalFilename();
 				//uploadFile[i].transferTo(new File("c:/upload",filename));			
-				uploadFile[i].transferTo(new File(folder ,filename));
+				uploadFile[i].transferTo(new File("c:/upload" ,filename));
 				if( i == uploadFile.length-1 )
 					temp.append(filename); 
 				else
-					temp.append(filename + "||"); 
+					temp.append(filename + ","); 
 				
 			}
 		}
-		board.setUploadFileName(temp.toString());*/
+		board.setUploadFileName(temp.toString());
 		
 		//파일명 중복 처리(FileRenamePolicy 추가 할것);	
-		if(!uploadFile.isEmpty() && uploadFile.getSize() > 0) {
+		
+		//if(!uploadFile.isEmpty() && uploadFile.getSize() > 0) {
 			//String filename = new String(uploadFile.getOriginalFilename().getBytes("8859_1"),"UTF-8");	
 			/*			8859_1 번호
 				브라우저에서 8859_1로 보냄으로 이것을 읽은다음 UTF-8로 인코딩을 한다.*/
-			String filename = uploadFile.getOriginalFilename();
-			uploadFile.transferTo(new File("c:/upload",filename));			
-			board.setUploadFileName(filename);
-		}
+//			String filename = uploadFile.getOriginalFilename();
+//			uploadFile.transferTo(new File("c:/upload",filename));			
+//			board.setUploadFileName(filename);
+//		}
 		
 		//게시글 등록
 		boardService.insertBoard(board);

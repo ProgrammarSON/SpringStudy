@@ -16,6 +16,7 @@
 	<!-- 다중파일 업로드시 -->
  	<input type="file" name="uploadFile">
 	<input type="file" name="uploadFile"> 
+	<input type="file" name="uploadFile"> 
 	<br>
 	
 	<input type="submit" value="등록" />

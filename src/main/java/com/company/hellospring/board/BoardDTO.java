@@ -11,28 +11,28 @@ public class BoardDTO {
 	String cnt;
 	String out_msg;
 	String uploadFileName; //첨부파일명
-	MultipartFile uploadFile; //첨부파일	
-	//MultipartFile[] uploadFile; //다중 파일시 배열로
+	//MultipartFile uploadFile; //첨부파일	
+	MultipartFile[] uploadFile; //다중 파일시 배열로
 	
 	
-/*	public MultipartFile[] getUploadFile() {
+	public MultipartFile[] getUploadFile() {
 		return uploadFile;
 	}
 	public void setUploadFile(MultipartFile[] uploadFile) {
 		this.uploadFile = uploadFile;
-	}*/
+	}
 	public String getUploadFileName() {
 		return uploadFileName;
 	}
 	public void setUploadFileName(String uploadFileName) {
 		this.uploadFileName = uploadFileName;
 	}
-	public MultipartFile getUploadFile() {
+/*	public MultipartFile getUploadFile() {
 		return uploadFile;
 	}
 	public void setUploadFile(MultipartFile uploadFile) {
 		this.uploadFile = uploadFile;
-	}
+	}*/
 	public String getSeq() {
 		return seq;
 	}
