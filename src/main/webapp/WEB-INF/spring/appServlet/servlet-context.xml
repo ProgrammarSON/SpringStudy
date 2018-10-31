@@ -25,9 +25,11 @@
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<mvc:resources mapping="/images/**" location="/images/" />
 
+<beans:bean p:order="1"
+	class="org.springframework.web.servlet.view.BeanNameViewResolver" />
 	<beans:bean
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver"
-		p:order="1"
+		p:order="2"
 		p:viewClass="org.springframework.web.servlet.view.tiles3.TilesView" />
 	<!--Don't add suffix or prefix like you do with .jsp files -->
 	<beans:bean id="tilesConfigurer"
@@ -139,6 +141,19 @@
 				</beans:property>
 			</beans:bean>
 
+	<!-- 메일 발송 빈 -->
+	<beans:bean id="javaMailSenderImpl"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<beans:property name="host" value="smtp.gmail.com" />
+		<beans:property name="username" value="sjw3957@gmail.com" />
+		<beans:property name="password"	value="gtyefhgkhaqohvnm" />
+		<beans:property name="javaMailProperties">
+			<beans:props>
+				<beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+	
 			<!-- interceptor 등록 -->
 <!-- 			<beans:bean
 				class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
