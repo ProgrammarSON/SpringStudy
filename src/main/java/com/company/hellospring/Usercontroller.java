@@ -101,7 +101,14 @@ public class Usercontroller {
 	@RequestMapping("/insertUserForm.do")
 	public String insertUsersForm(Model model, UserDTO dto) {
 		return "users/insertUser";
-	}	
+	}
+	
+	//유효성 등록폼
+	@RequestMapping("/insertUserValidForm.do")
+	public String insertUserValidForm(UserDTO user) {
+		return "users/insertUserValid";
+	}
+	
 	//등록처리
 	@RequestMapping("/insertUser.do")
 	public String insertUser(Model model, UserDTO dto) {

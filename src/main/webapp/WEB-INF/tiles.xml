@@ -11,11 +11,18 @@
 			value="/WEB-INF/views/tiles/content.jsp" />
 <!-- 		<put-attribute name="footer"
 			value="/WEB-INF/jsp/tiles/footer.jsp" /> -->
+	</definition >
+	
+	<definition name="popup/*/*" template="/WEB-INF/views/tiles/popuplayout.jsp">
+		<put-attribute name="content"
+			value="/WEB-INF/views/{1}/{2}.jsp" />
 	</definition>
+	
 	<definition name="*/*" extends="mainTemplate">
 		<put-attribute name="content"
 			value="/WEB-INF/views/{1}/{2}.jsp" />
 	</definition>
+	
 	<definition name="*/*/*" extends="mainTemplate">
 		<put-attribute name="content"
 			value="/WEB-INF/views/{1}/{2}/{3}.jsp" />

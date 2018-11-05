@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC 
+    "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" 
+    "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+
+    <formset>
+		<form name="userDTO">
+			<field property="id" depends="required, minlength">
+        		<arg0 key="id" />
+        		<arg1 key="5" resource="false"/>
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>5</var-value>
+				</var>
+			</field>			
+
+			<field property="password" depends="required">
+        		<arg0 key="password" />
+			</field> 			
+		</form>
+    </formset>
+
+</form-validation>
