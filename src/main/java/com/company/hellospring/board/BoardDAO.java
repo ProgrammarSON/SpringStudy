@@ -23,4 +23,8 @@ public class BoardDAO {
 	public int insertBoard(BoardDTO dto) {
 		return mybatis.insert("board.insertBoard", dto);
 	}
+	
+	public BoardDTO getBoard(BoardDTO dto) {
+		return mybatis.selectOne("board.getBoard", dto);
+	}
 }

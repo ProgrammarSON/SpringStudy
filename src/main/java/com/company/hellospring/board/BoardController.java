@@ -27,6 +27,13 @@ public class BoardController {
 	@Autowired
 	BoardService boardService;
 	
+	//상세보기 보기
+	@RequestMapping("getBoard")
+	public String getBoard(BoardDTO dto, Model model) {
+		model.addAttribute("board",boardService.getBoard(dto));
+		return "board/getBoard";
+	}
+	
 	@RequestMapping("/getBoards.do")
 	public String getUsers(Model model) {
 		model.addAttribute("list",boardService.getBoards());

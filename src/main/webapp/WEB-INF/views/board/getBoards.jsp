@@ -18,8 +18,10 @@
 	<tr><td>번호</td><td>제목</td><td>작성자</td><td>내용</td><td>작성날짜</td><td>조회수</td></tr>	
 	<c:forEach items="${list}" var="board">
 		<tr>
-			<td><a href="">${board.seq}</a></td><td>${board.title}</td><td>${board.writer}</td><td>${board.content}</td>
-			<td>${board.regdate}</td><td>${board.cnt}</td> <td><a href="./FileDown.do?atchFileId=${board.uploadFileName}">${board.uploadFileName}</a></td>
+			<td><a href="">${board.seq}</a></td><td><a href="./getBoard?seq=${board.seq}">${board.title}</a></td>
+			<td>${board.writer}</td><td>${board.content}</td>
+			<td>${board.regdate}</td><td>${board.cnt}</td> 
+			<td><a href="./FileDown.do?atchFileId=${board.uploadFileName}">${board.uploadFileName}</a></td>
 		</tr>
 	</c:forEach>
 </table>
