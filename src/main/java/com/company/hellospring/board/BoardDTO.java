@@ -1,18 +1,32 @@
 package com.company.hellospring.board;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.springframework.web.multipart.MultipartFile;
 
+/** JPA 설정 **/
+@Entity()
+@Table(name="BOARD")
 public class BoardDTO {
-	String seq;
-	String title;
-	String writer;
-	String content;
-	String regdate;
-	String cnt;
-	String out_msg;
-	String uploadFileName; //첨부파일명
+	
+	@Id					//기본키 지정
+	@GeneratedValue		//sequnce 지정
+	private int seq;
+	private String title;
+	private String writer;
+	private String content;
+	private String regdate;
+	private int cnt;
+	private String uploadFileName;
+	
+	/* @Transient는 Table 필드와 무관한것들을 지정 */
+	@Transient String out_msg;	
 	//MultipartFile uploadFile; //첨부파일	
-	MultipartFile[] uploadFile; //다중 파일시 배열로
+	@Transient MultipartFile[] uploadFile; //다중 파일시 배열로
 	
 	
 	public MultipartFile[] getUploadFile() {
@@ -33,14 +47,23 @@ public class BoardDTO {
 	public void setUploadFile(MultipartFile uploadFile) {
 		this.uploadFile = uploadFile;
 	}*/
-	public String getSeq() {
-		return seq;
-	}
-	public void setSeq(String seq) {
-		this.seq = seq;
-	}
+	
+	
+
 	public String getTitle() {
 		return title;
+	}
+	public int getSeq() {
+		return seq;
+	}
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}
 	public void setTitle(String title) {
 		this.title = title;
@@ -63,12 +86,7 @@ public class BoardDTO {
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
-	public String getCnt() {
-		return cnt;
-	}
-	public void setCnt(String cnt) {
-		this.cnt = cnt;
-	}
+
 		
 	public String getOut_msg() {
 		return out_msg;

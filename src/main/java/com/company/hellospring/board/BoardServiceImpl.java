@@ -8,30 +8,30 @@ import org.springframework.stereotype.Service;
 @Service
 public class BoardServiceImpl implements BoardService{
 
-	@Autowired BoardDAO dao;
-
+	@Autowired //BoardDAO dao;
+	BoardDAOJPA dao;		
 	@Override
 	public List<BoardDTO> getBoards() {
 		// TODO Auto-generated method stub
-		return dao.getBoards();
+		return dao.getBoardList();
 	}
 
 	@Override
-	public int insertBoard(BoardDTO dto) {
+	public void insertBoard(BoardDTO dto) {
 		// TODO Auto-generated method stub
-		return dao.insertBoard(dto);
+		dao.insertBoard(dto);
 	}
 
 	@Override
-	public int updateBoard(BoardDTO dto) {
+	public void updateBoard(BoardDTO dto) {
 		// TODO Auto-generated method stub
-		return 0;
+		dao.updateBoard(dto);;
 	}
 
 	@Override
-	public int deleteBoard(BoardDTO dto) {
+	public void deleteBoard(BoardDTO dto) {
 		// TODO Auto-generated method stub
-		return 0;
+		 dao.deleteBoard(dto);
 	}
 
 	@Override

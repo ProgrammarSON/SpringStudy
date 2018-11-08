@@ -81,6 +81,27 @@
 		class="org.springframework.jdbc.core.JdbcTemplate">
 		<beans:property name="dataSource" ref="dataSource" />
 	</beans:bean>
+	
+	
+	<!-- 스프링과 JPA 연동 설정 -->
+	<beans:bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"></beans:bean>
+	
+	<beans:bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	    <beans:property name="dataSource" ref="dataSource"></beans:property>
+	    <beans:property name="jpaVendorAdapter" ref="jpaVendorAdapter"></beans:property>
+	    <beans:property name="packagesToScan" value="com.company.hellospring"></beans:property>
+	    <beans:property name="jpaProperties">
+			<beans:props>	    
+			<beans:prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</beans:prop>
+			<beans:prop key="hibernate.show_sql">true</beans:prop>
+			<beans:prop key="hibernate.format_sql">true</beans:prop>
+			<beans:prop key="hibernate.use_sql_comments">false</beans:prop>
+			<beans:prop key="hibernate.id.new_generator_mappings">true</beans:prop>
+			<!-- <beans:prop key="hibernate.hbm2ddl.auto">update</beans:prop>-->	<!-- table 자동 생성 -->
+			</beans:props>
+	    </beans:property>
+	</beans:bean>
+	
 
 	<!-- mybatis 설정 -->
 	<beans:bean id="sqlSession"
@@ -97,19 +118,39 @@
 	</beans:bean>
 
 
-	<beans:bean id="txManager"
+	<!-- 트랜잭션 AOP -->
+	<!-- org.springframework.jdbc.datasource.DataSourceTransactionManager -->
+	<beans:bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<!-- <property name="dataSource" ref="dataSource"/> -->
+		<beans:property name="entityManagerFactory" ref="entityManagerFactory"></beans:property>
+	</beans:bean>
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="*"/>
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut expression="execution(* com.company..*Impl.*(..))" 
+		     id="allpointcut"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="allpointcut"/>
+	</aop:config> 
+
+
+<!-- 	<beans:bean id="txManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<beans:property name="dataSource" ref="dataSource" />
 	</beans:bean>
 
 	<tx:advice id="txAdvice" transaction-manager="txManager">
 		<tx:attributes>
-			<tx:method name="get*" read-only="true" />		<!-- transaction 처리를 해라 (autoCommit(false)) -->
+			<tx:method name="get*" read-only="true" />		transaction 처리를 해라 (autoCommit(false))
 			<tx:method name="*" />
 		</tx:attributes>
-	</tx:advice>
-
-
+	</tx:advice> -->
+	
+	
+	
 	<!-- MultipartResolver 설정 -->
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
