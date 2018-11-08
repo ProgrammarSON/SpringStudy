@@ -78,6 +78,6 @@ SELECT * FROM ( SELECT u.*, rownum rn FROM (
 </update>
 <!-- 삭제 -->
 <delete id="deleteUser" parameterType="user">
-	DELETE FROM USERS WHERE = #{id}
+	DELETE FROM USERS WHERE ID = #{id}
 </delete>
 </mapper> 

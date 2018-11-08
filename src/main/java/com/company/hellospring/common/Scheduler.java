@@ -12,12 +12,12 @@ public class Scheduler {
 	@Autowired
 	UserService userService;
 		
-	@Scheduled(cron="0/30 * 9 * * *")	//9시 시간대에 30초간격으로 실행
+	/*@Scheduled(cron="0/30 * 9 * * *")	//9시 시간대에 30초간격으로 실행
 	public void jobTest1() {
 		System.out.println("job 실행");
 		UserSearchDTO searchDTO = new UserSearchDTO();
 		searchDTO.setStart(1);
 		searchDTO.setEnd(3);
 		System.out.println(userService.getUsers(searchDTO));
-	}
+	}*/
 }
