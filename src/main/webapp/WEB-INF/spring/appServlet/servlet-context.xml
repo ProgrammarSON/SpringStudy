@@ -97,7 +97,7 @@
 			<beans:prop key="hibernate.format_sql">true</beans:prop>
 			<beans:prop key="hibernate.use_sql_comments">false</beans:prop>
 			<beans:prop key="hibernate.id.new_generator_mappings">true</beans:prop>
-			<!-- <beans:prop key="hibernate.hbm2ddl.auto">update</beans:prop>-->	<!-- table 자동 생성 -->
+			<beans:prop key="hibernate.hbm2ddl.auto">create</beans:prop>	<!-- table 자동 생성 -->
 			</beans:props>
 	    </beans:property>
 	</beans:bean>

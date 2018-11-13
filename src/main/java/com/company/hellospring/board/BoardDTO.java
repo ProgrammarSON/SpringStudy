@@ -1,9 +1,14 @@
 package com.company.hellospring.board;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -16,19 +21,22 @@ public class BoardDTO {
 	@Id					//기본키 지정
 	@GeneratedValue		//sequnce 지정
 	private int seq;
+	@Column(name="board_title",nullable=false, length=100)	//DB 컬럼을 board_title로 지정
 	private String title;
+	@Column(name="board_writer", updatable=false)
 	private String writer;
 	private String content;
-	private String regdate;
+	@Temporal(TemporalType.DATE)	
+	private Date regdate = new Date();	//new Date는 초기값 설정을 위해서
 	private int cnt;
 	private String uploadFileName;
+	
 	
 	/* @Transient는 Table 필드와 무관한것들을 지정 */
 	@Transient String out_msg;	
 	//MultipartFile uploadFile; //첨부파일	
 	@Transient MultipartFile[] uploadFile; //다중 파일시 배열로
-	
-	
+
 	public MultipartFile[] getUploadFile() {
 		return uploadFile;
 	}
@@ -80,10 +88,10 @@ public class BoardDTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getRegdate() {
+	public Date getRegdate() {
 		return regdate;
 	}
-	public void setRegdate(String regdate) {
+	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
 
