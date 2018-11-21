@@ -25,6 +25,7 @@ function init(){
 		goodsList = JSON.parse(goodsList);
 	}
 }
+
 function viewGoods() {
 	$(".good").click(function(){
 		var name = $(this).find("span").text();
@@ -37,6 +38,7 @@ function viewGoods() {
 		viewRender();
 	});
 }
+
 function viewRender(){
 	$("ul#viewGoods").empty();
 	for(i in goodsList){  
